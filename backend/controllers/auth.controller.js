@@ -30,9 +30,10 @@ const register = async (req, res) => {
 
     const userId = await createUser({ name, email, password, role });
     res.status(201).json({ id: userId, email, name });
-  } catch (err) {
-    console.error('REGISTER ERROR:', err.message);
-    res.status(500).json({ error: 'Erreur serveur' });
+  } catch (error) {
+    console.error('REGISTER ERROR:', error.message);
+    // res.status(500).json({ error: 'Erreur serveur' });
+    next(error);
   }
 };
 
@@ -60,9 +61,10 @@ const login = async (req, res) => {
     // });
 
     res.json({ accessToken, refreshToken });
-  } catch (err) {
-    console.error('LOGIN ERROR:', err.message);
-    res.status(500).json({ error: 'Erreur serveur' });
+  } catch (error) {
+    console.error('LOGIN ERROR:', error.message);
+    // res.status(500).json({ error: 'Erreur serveur' });
+    next(error);
   }
 };
 
@@ -89,9 +91,10 @@ const refresh = async (req, res) => {
     await saveRefreshToken(user.id, newRefreshToken);
 
     res.json({ accessToken, refreshToken: newRefreshToken });
-  } catch (err) {
-    console.error('REFRESH ERROR:', err.message);
+  } catch (error) {
+    console.error('REFRESH ERROR:', error.message);
     res.status(500).json({ error: 'Erreur serveur' });
+    next(error);
   }
 };
 
@@ -109,9 +112,10 @@ const logout = async (req, res) => {
 
     await clearRefreshToken(payload.id);
     res.json({ ok: true });
-  } catch (err) {
-    console.error('LOGOUT ERROR:', err.message);
-    res.status(500).json({ error: 'Erreur serveur' });
+  } catch (error) {
+    console.error('LOGOUT ERROR:', error.message);
+    // res.status(500).json({ error: 'Erreur serveur' });
+    next(error);
   }
 };
 

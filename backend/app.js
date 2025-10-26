@@ -6,6 +6,8 @@ const { apiLimiter } = require('./middlewares/rateLimiter');
 const userRoutes = require('./routes/users.routes');
 const authRoutes = require('./routes/auth.routes');
 const productRoutes = require('./routes/products.routes');
+const errorHandler = require('./middlewares/errorHandler');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -19,6 +21,7 @@ app.use(apiLimiter); // protège toute l’API
 app.use('/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
+app.use(errorHandler);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 console.log("📄 Swagger docs: http://localhost:" + PORT + "/api-docs");

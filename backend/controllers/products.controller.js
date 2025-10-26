@@ -22,7 +22,8 @@ const create_P = async (req, res) => {
         })
     } catch (error) {
         console.error("### [Controller] CREATE PRODUCT ERROR : ", error.message);
-        res.status(500).json({error: "[Controller] Erreur serveur lors de la création du produit"})
+        // res.status(500).json({error: "[Controller] Erreur serveur lors de la création du produit"})
+        next(error);
     }
 }
 
@@ -32,7 +33,8 @@ const getAll = async (req, res) => {
         res.json(product);
     } catch (error) {
         console.error("### [Controller] GET ALL PRODUCT ERROR : ", error.message);
-        res.status(500).json({error: "[Controller] Erreur serveur lors de la récupération des produits"})
+        // res.status(500).json({error: "[Controller] Erreur serveur lors de la récupération des produits"})
+        next(error);
     }
 }
 
@@ -42,7 +44,8 @@ const getAvailable_P = async (req, res) => {
         res.json(product);
     } catch (error) {
         console.error("### [Controller] GET PRODUCT ERROR : ", error.message);
-        res.status(500).json({error: "[Controller] Erreur serveur lors de la récupération du produit"})
+        // res.status(500).json({error: "[Controller] Erreur serveur lors de la récupération du produit"})
+        next(error);
     }
 }
 
@@ -53,7 +56,8 @@ const getOne_P = async (req, res) => {
         res.json(product);
     } catch (error) {
         console.error("### [Controller] GET PARTICULA PRODUCT ERROR : ", error.message);
-        res.status(500).json({error: "[Controller] Erreur serveur lors de la récupération du produit"})
+        // res.status(500).json({error: "[Controller] Erreur serveur lors de la récupération du produit"})
+        next(error);
     }
 }
 
@@ -64,7 +68,8 @@ async function update_P(req, res) {
         res.json({message: 'Produit mis à jour avec succès'})
     } catch (error) {
         console.error("### [Controller] UPDATE PRODUCT ERROR : ", error.message);
-        res.status(500).json({error: "[Controller] Erreur serveur lors de la mise à jour du produit"});
+        // res.status(500).json({error: "[Controller] Erreur serveur lors de la mise à jour du produit"});
+        next(error);
     }
 }
 
@@ -75,7 +80,8 @@ async function delete_P(req, res) {
         res.json({message: 'Produit supprimé'})
     } catch (error) {
         console.error("### [Controller] DELETE PRODUCT ERROR : ", error.message);
-        res.status(500).json({error: "[Controller] Erreur serveur lors de la suppression du produit"});
+        // res.status(500).json({error: "[Controller] Erreur serveur lors de la suppression du produit"});
+        next(error);
     }
 }
 
