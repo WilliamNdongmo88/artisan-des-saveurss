@@ -5,7 +5,6 @@ const {getProductById} = require('../models/products');
 const {updateProduct} = require('../models/products');
 const {deleteProduct} = require('../models/products');
 
-
 const create_P = async (req, res) => {
     try {
         const { name,
@@ -16,14 +15,20 @@ const create_P = async (req, res) => {
         if (!name || !price) {
             return res.status(400).json({error: "Le nom et le prix  sont requis."})
         }
-        const productId = await createProduct({name, description, price, category, preparation, recette});
+        const product = await createProduct(req.body, req.file);
+        console.log("###product :: ", product);
+        // Vérification du succès
+        if (!product.success) {
+            return res.status(500).json({
+                error: product.error || "Erreur lors de la création du produit."
+            });
+        }
         res.status(201).json({
-            user: {id: productId, name, description, price, category, preparation, recette}
+            product: {id: product.result, name, description, price, category, preparation, recette, file: product.file}
         })
     } catch (error) {
         console.error("### [Controller] CREATE PRODUCT ERROR : ", error.message);
-        // res.status(500).json({error: "[Controller] Erreur serveur lors de la création du produit"})
-        next(error);
+        res.status(500).json({error: "[Controller] Erreur serveur lors de la création du produit"})
     }
 }
 
@@ -62,15 +67,33 @@ const getOne_P = async (req, res) => {
 }
 
 async function update_P(req, res) {
-    try {
-        const product = await updateProduct(req.params.id, req.body);
-        if(!product) return res.status(404).json({message: `Product not found`})
-        res.json({message: 'Produit mis à jour avec succès'})
-    } catch (error) {
-        console.error("### [Controller] UPDATE PRODUCT ERROR : ", error.message);
-        // res.status(500).json({error: "[Controller] Erreur serveur lors de la mise à jour du produit"});
-        next(error);
+  try {
+    const productId = req.params.id;
+    const result = await updateProduct(productId, req.body, req.file);
+    console.log("result :: ", result)
+    if (!result.found) {
+      return res.status(404).json({ message: "Produit introuvable" });
     }
+
+    if (result.affectedRows > 0) {
+        // ✅ Vérification du succès
+        if (!result.success) {
+            return res.status(500).json({
+                error: result.error || "Erreur lors de la mise à jour du produit."
+            });
+        }
+        return res.json({ 
+            message: "Produit mis à jour avec succès",
+            productId: result.productId,
+            file: result.file
+         });
+    } else {
+      return res.status(400).json({ message: "Aucune modification effectuée" });
+    }
+  } catch (error) {
+    console.error("### [Controller] UPDATE PRODUCT ERROR : ", error);
+    return res.status(500).json({ error: "Erreur serveur lors de la mise à jour du produit" });
+  }
 }
 
 async function delete_P(req, res) {

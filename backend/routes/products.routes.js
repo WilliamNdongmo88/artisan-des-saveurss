@@ -1,6 +1,7 @@
 const express = require('express');
 const ProductController = require('../controllers/products.controller');
 const { authenticateToken, requireRole } = require('../middlewares/jwtFillter');
+const upload = require("../middlewares/upload");
 
 const router = express.Router();
 
@@ -11,6 +12,9 @@ const router = express.Router();
  *   description: Gestion des produits
  */
 
+// Pour avoir la possibilité de charger un fichier depuis l'interface swagger, 
+// changer le type de content et file respectivement par :
+// - multipart/form-data et string
 /**
  * @swagger
  * /api/products:
@@ -24,66 +28,65 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Product'
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "Chipolatas"
+ *               description:
+ *                 type: string
+ *                 example: "Fine saucisse de porc idéale pour le barbecue."
+ *               price:
+ *                 type: number
+ *                 example: 523.88
+ *               category:
+ *                 type: string
+ *                 example: "saucisses-et-variantes"
+ *               origin:
+ *                 type: string
+ *                 example: "France"
+ *               preparation:
+ *                 type: string
+ *                 example: "Griller 10–12 min à feu moyen sans percer, jusqu’à belle coloration uniforme."
+ *               recette:
+ *                 type: string
+ *                 example: "Porc, Sel, Sucre, Epices"
+ *               is_available:
+ *                 type: boolean
+ *                 example: true
+ *               stock_quantity:
+ *                 type: integer
+ *                 example: 20
+ *               unit:
+ *                 type: string
+ *                 example: "pièce"
+ *               is_featured:
+ *                 type: boolean
+ *                 example: false
+ *               file:
+ *                 type: integer
+ *                 format: binary
+ *                 description: Image du produit à uploader
  *     responses:
  *       201:
  *         description: Produit créé avec succès
  *       400:
  *         description: Données invalides
  */
-router.post('/', authenticateToken, requireRole('admin'), ProductController.create_P);
+router.post('/', authenticateToken, requireRole('admin'), upload.single("file"), ProductController.create_P);
 
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     Product:
- *       type: object
- *       properties:
- *         id:
- *           type: integer
- *           example: 1
- *         name:
- *           type: string
- *           example: "Chipolatas"
- *         description:
- *           type: string
- *           example: "Fine saucisse de porc idéale pour le barbecue."
- *         price:
- *           type: number
- *           format: float
- *           example: 15.50
- *         category:
- *           type: string
- *           example: "saucisses-et-variantes"
- *         recette:
- *           type: string
- *           example: "porc, épices..."
- *         is_available:
- *           type: boolean
- *           example: true
- *         stock_quantity:
- *           type: integer
- *           example: 30
- *         unit:
- *           type: string
- *           example: "Kg"
- *         is_featured:
- *           type: boolean
- *           example: false
- *         origin:
- *           type: string
- *           example: "France"
- *         preparation:
- *           type: string
- *           example: "Griller 10 min à feu moyen."
- *         created_at:
- *           type: string
- *           format: date-time
- *         updated_at:
- *           type: string
- *           format: date-time
+ * /api/products:
+ *   get:
+ *     summary: Récupère tous les produits
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: Tous les produits récupérée avec succès
+ *       500:
+ *         description: Erreur serveur
  */
 router.get('/' , ProductController.getAll);
 
@@ -128,22 +131,62 @@ router.get('/:id', ProductController.getOne_P);
  * @swagger
  * /api/products/{id}:
  *   put:
- *     summary: Modifier un produit existant
+ *     summary: Modifier un produit existant (avec option upload image)
  *     tags: [Products]
  *     security:
- *       - bearerAuth: []
+ *       - bearerAuth: []  # <-- JWT est requis
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
+ *         description: ID du produit à mettre à jour
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/Product'
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "Chipolatas"
+ *               description:
+ *                 type: string
+ *                 example: "Fine saucisse de porc"
+ *               price:
+ *                 type: number
+ *                 format: float
+ *                 example: 524.0
+ *               category:
+ *                 type: string
+ *                 example: "saucisses-et-variantes"
+ *               recette:
+ *                 type: string
+ *                 example: "Porc, sel, sucre, épices"
+ *               preparation:
+ *                 type: string
+ *                 example: "Griller 10–12 min à feu moyen"
+ *               is_available:
+ *                 type: boolean
+ *                 example: true
+ *               is_featured:
+ *                 type: boolean
+ *                 example: false
+ *               stock_quantity:
+ *                 type: integer
+ *                 example: 30
+ *               unit:
+ *                 type: string
+ *                 example: "Kg"
+ *               origin:
+ *                 type: string
+ *                 example: "France"
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *                 description: Image du produit
  *     responses:
  *       200:
  *         description: Produit mis à jour avec succès
@@ -154,8 +197,7 @@ router.get('/:id', ProductController.getOne_P);
  *       500:
  *         description: Erreur serveur
  */
-router.put('/:id', authenticateToken, requireRole('admin'), ProductController.update_P);
-
+router.put('/:id', authenticateToken, requireRole('admin'), upload.single("file"), ProductController.update_P);
 
 /**
  * @swagger

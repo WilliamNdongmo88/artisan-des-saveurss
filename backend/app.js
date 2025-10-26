@@ -8,6 +8,8 @@ const authRoutes = require('./routes/auth.routes');
 const productRoutes = require('./routes/products.routes');
 const errorHandler = require('./middlewares/errorHandler');
 
+const uploadRoutes = require("./routes/uploads.routes");
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -20,6 +22,7 @@ app.use(express.json());
 app.use(apiLimiter); // protège toute l’API
 app.use('/users', userRoutes);
 app.use('/api/products', productRoutes);
+app.use("/api/upload", uploadRoutes);
 app.use('/api/auth', authRoutes);
 app.use(errorHandler);
 

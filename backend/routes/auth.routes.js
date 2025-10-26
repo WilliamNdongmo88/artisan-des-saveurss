@@ -12,7 +12,7 @@ const { loginLimiter } = require('../middlewares/rateLimiter');
 
 /**
  * @swagger
- * /auth/register:
+ * /api/auth/register:
  *   post:
  *     summary: Création d’un utilisateur
  *     tags: [Auth]
@@ -32,7 +32,7 @@ router.post('/register', AuthController.register);
 
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Connexion d’un utilisateur
  *     tags: [Auth]
