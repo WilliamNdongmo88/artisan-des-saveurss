@@ -1,0 +1,51 @@
+
+networks: 
+  artisan_des_saveurs_net:
+    driver: bridge
+
+services:
+  dev-db:
+    image: mysql:8.1
+    container_name: res-artisan_des_saveurs_dev
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    ports:
+      - "3306:3306"
+    networks:
+      - artisan_des_saveurs_net
+    volumes:
+      - dev_db_data:/var/lib/mysql
+
+  prod-db:
+    image: mysql:8.1
+    container_name: res-artisan_des_saveurs_prod
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: prod_artisan_des_saveurs_db
+    ports:
+      - "3307:3306"
+    networks:
+      - artisan_des_saveurs_net
+    volumes:
+      - prod_db_data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    container_name: adminer_artisan
+    restart: always
+    ports:
+      - "8081:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: dev-db
+    networks:
+      - artisan_des_saveurs_net
+    depends_on:
+      - dev-db
+
+
+volumes:
+  dev_db_data:
+  prod_db_data:
