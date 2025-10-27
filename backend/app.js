@@ -7,8 +7,8 @@ const userRoutes = require('./routes/users.routes');
 const authRoutes = require('./routes/auth.routes');
 const productRoutes = require('./routes/products.routes');
 const errorHandler = require('./middlewares/errorHandler');
-
 const uploadRoutes = require("./routes/uploads.routes");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -20,6 +20,7 @@ const swaggerDocument = require("./docs/swagger");
 
 app.use(express.json());
 app.use(apiLimiter); // protège toute l’API
+app.use(cors({ origin: "*" }));
 app.use('/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use("/api/upload", uploadRoutes);
