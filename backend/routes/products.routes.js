@@ -15,6 +15,7 @@ const router = express.Router();
 // Pour avoir la possibilité de charger un fichier depuis l'interface swagger, 
 // changer le type de content et file respectivement par :
 // - multipart/form-data et string
+
 /**
  * @swagger
  * /api/products:
@@ -26,17 +27,20 @@ const router = express.Router();
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         application/json:      # multipart/form-data : pour l'upload de fichiers / application/json
  *           schema:
-*               $ref: '#/components/schemas/ProductData'
+ *             $ref: '#/components/schemas/ProductData'
  *     responses:
  *       201:
  *         description: Produit créé avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProductData'
  *       400:
  *         description: Données invalides
  */
 router.post('/', authenticateToken, requireRole('admin'), upload.single("file"), ProductController.create_P);
-
 
 /**
  * @swagger
@@ -93,18 +97,30 @@ router.get('/:id', ProductController.getOne_P);
  * @swagger
  * /api/products/{id}:
  *   put:
- *     summary: Modifier un produit existant (avec option upload image)
+ *     summary: Modifier un produit existant (avec option d'upload d'image)
  *     tags: [Products]
  *     security:
- *       - bearerAuth: []  # <-- JWT est requis
+ *       - bearerAuth: []   # ✅ JWT requis
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
- *           $ref: '#/components/schemas/ProductData'
+ *           type: integer
+ *         required: true
+ *         description: ID du produit à mettre à jour
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/ProductData'
  *     responses:
  *       200:
  *         description: Produit mis à jour avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProductData'
  *       400:
  *         description: Données invalides
  *       404:
