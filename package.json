@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand",
-    "start": "nodemon backend/app.js"
+    "test": "cross-env NODE_ENV=test jest --runInBand",
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +28,12 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "jest": "^30.2.0",
     "supertest": "^7.1.4"
+  },
+  "jest": {
+    "setupFilesAfterEnv": ["<rootDir>/backend/tests/jest.setup.js"],
+    "testEnvironment": "node"
   }
 }

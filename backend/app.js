@@ -17,7 +17,6 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./docs/swagger");
 
 
-
 app.use(express.json());
 app.use(apiLimiter); // protège toute l’API
 // app.use(cors({ origin: "*" }));
@@ -29,6 +28,8 @@ app.use(errorHandler);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 console.log("📄 Swagger docs: http://localhost:" + PORT + "/api-docs");
+
+let server; // Pour stocker l'instance du serveur HTTP
 
 const startServer = async () => {
   try {
@@ -45,14 +46,33 @@ const startServer = async () => {
       res.send('🚀 Node.js + MySQL connectés et initialisés !');
     });
 
-    app.listen(PORT, () => {
+    server = app.listen(PORT, () => {
       console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
     });
+    return server; // Retourner l'instance du serveur
   } catch (err) {
     console.error('❌ Erreur au démarrage :', err.message);
+    // Le pool est géré par le module bd.js, pas besoin de le fermer ici
+    throw err; // Relancer l'erreur pour que l'appelant puisse la gérer
   }
 };
 
-startServer();
+const closeServer = async () => {
+  try {
+    if (server) {
+      await new Promise(resolve => server.close(resolve));
+      console.log('✅ Serveur HTTP fermé');
+    }
+    // Fermer le pool de connexions
+    await pool.end();
+    console.log('✅ Pool MySQL fermé');
+  } catch (err) {
+    console.error('❌ Erreur lors de la fermeture du serveur/pool MySQL :', err.message);
+    throw err;
+  }
+};
 
-module.exports = app; // Pour les test
+// Ne pas appeler startServer() ici pour permettre à Jest de contrôler le démarrage.
+
+module.exports = { app, startServer, closeServer, pool }; // Exporter l'application, les fonctions de contrôle et le pool pour les tests
+

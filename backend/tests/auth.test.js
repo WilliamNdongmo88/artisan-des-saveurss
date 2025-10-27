@@ -1,17 +1,16 @@
 process.env.NODE_ENV = "test";
 require("dotenv").config({ path: ".env.test" });
 
-const pool = require("../config/bd");
 const request = require("supertest");
-const app = require("../app");
+const { app, startServer, closeServer } = require("../app");
+let server; // Pour stocker l'instance du serveur
 
 let token;
 
 describe("Auth API", () => {
     beforeAll(async () => {
-        const connection = await pool.getConnection();
-        await connection.ping(); // optionnel, juste pour tester
-        connection.release();
+        // Démarrer le serveur et initialiser la base de données
+        server = await startServer();
     });
 
     describe("Auth API", () => {
@@ -40,8 +39,11 @@ describe("Auth API", () => {
         expect(res.body).toHaveProperty("email", "test@example.com");
     });
 
-  afterAll(async () => {
-    await pool.end();
-  });
+    afterAll(async () => {
+        // Fermer le serveur et le pool de connexion
+        await closeServer();
+    });
 });
+
+
 
