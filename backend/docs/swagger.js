@@ -55,7 +55,78 @@ const options = {
             },
           },
         },
-      },
+        MeResponse: {
+          type: "object",
+          properties: {
+            id: {
+              type: "integer",
+              example: 1,
+            },
+            name: {
+              type: "string",
+              example: "will",
+            },
+            email: {
+              type: "string",
+              example: "will@example.com",
+            },
+          },
+        },
+        ProductData:{
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              example: "Chipolatas"
+            },
+            description: {
+              type: "string",
+              example: "Fine saucisse de porc idéale pour le barbecue."
+            },
+            price: {
+              type: "number",
+              example: 523.88
+            },
+            category: {
+              type: "string",
+              example: "saucisses-et-variantes"
+            },
+            origin: {
+              type: "string",
+              example: "France"
+            },
+            preparation: {
+              type: "string",
+              example: "Griller 10–12 min à feu moyen sans percer, jusqu’à belle coloration uniforme."
+            },
+            recette: {
+              type: "string",
+              example: "Porc, Sel, Sucre, Epices"
+            },
+            is_available: {
+              type: "boolean",
+              example: true
+            },
+            stock_quantity: {
+              type: "integer",
+              example: 20
+            },
+            unit: {
+              type: "string",
+              example: "pièce"
+            },
+            is_featured: {
+              type: "boolean",
+              example: false
+            },
+            file: {
+              type: "string",
+              format: "binary",
+              description: "Image du produit à uploader"
+            }
+          },
+        }
+      }
     },
   },
   apis: ["./backend/routes/*.js"], // Doc scannée dans les routes

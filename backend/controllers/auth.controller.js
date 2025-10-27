@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const {
   createUser,
+  getUserByFk,
   getUserByEmail,
   getUserById,
   saveRefreshToken,
@@ -18,6 +19,18 @@ function signAccessToken(payload) {
 }
 function signRefreshToken(payload) {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN });
+}
+
+const getMe = async (req, res) => {
+  try {
+    const user = await getUserByFk(req.user.id);
+    if(!user) return res.json({message: "Utilisateur non trouvé"})
+    return res.json({id: user.id, name: user.name, email: user.email})
+  } catch (error) {
+    console.error('GET ME ERROR:', error.message);
+    // res.status(500).json({ error: 'Erreur serveur' });
+    next(error);
+  }
 }
 
 const register = async (req, res) => {
@@ -119,4 +132,4 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = { register, login, refresh, logout };
+module.exports = { register, login, refresh, logout, getMe };

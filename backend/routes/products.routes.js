@@ -28,45 +28,7 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 example: "Chipolatas"
- *               description:
- *                 type: string
- *                 example: "Fine saucisse de porc idéale pour le barbecue."
- *               price:
- *                 type: number
- *                 example: 523.88
- *               category:
- *                 type: string
- *                 example: "saucisses-et-variantes"
- *               origin:
- *                 type: string
- *                 example: "France"
- *               preparation:
- *                 type: string
- *                 example: "Griller 10–12 min à feu moyen sans percer, jusqu’à belle coloration uniforme."
- *               recette:
- *                 type: string
- *                 example: "Porc, Sel, Sucre, Epices"
- *               is_available:
- *                 type: boolean
- *                 example: true
- *               stock_quantity:
- *                 type: integer
- *                 example: 20
- *               unit:
- *                 type: string
- *                 example: "pièce"
- *               is_featured:
- *                 type: boolean
- *                 example: false
- *               file:
- *                 type: integer
- *                 format: binary
- *                 description: Image du produit à uploader
+*               $ref: '#/components/schemas/ProductData'
  *     responses:
  *       201:
  *         description: Produit créé avec succès
@@ -139,54 +101,7 @@ router.get('/:id', ProductController.getOne_P);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
- *         required: true
- *         description: ID du produit à mettre à jour
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 example: "Chipolatas"
- *               description:
- *                 type: string
- *                 example: "Fine saucisse de porc"
- *               price:
- *                 type: number
- *                 format: float
- *                 example: 524.0
- *               category:
- *                 type: string
- *                 example: "saucisses-et-variantes"
- *               recette:
- *                 type: string
- *                 example: "Porc, sel, sucre, épices"
- *               preparation:
- *                 type: string
- *                 example: "Griller 10–12 min à feu moyen"
- *               is_available:
- *                 type: boolean
- *                 example: true
- *               is_featured:
- *                 type: boolean
- *                 example: false
- *               stock_quantity:
- *                 type: integer
- *                 example: 30
- *               unit:
- *                 type: string
- *                 example: "Kg"
- *               origin:
- *                 type: string
- *                 example: "France"
- *               file:
- *                 type: string
- *                 format: binary
- *                 description: Image du produit
+ *           $ref: '#/components/schemas/ProductData'
  *     responses:
  *       200:
  *         description: Produit mis à jour avec succès

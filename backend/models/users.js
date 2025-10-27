@@ -42,6 +42,11 @@ async function createDefaultAdmin() {
     }
 }
 
+async function getUserByFk(id) {
+  const [user] = await pool.query(`SELECT * FROM USERS WHERE id=?`, [id]);
+  return user.length ? user[0] : null;
+}
+
 // Fonction pour créer un utilisateur
 // const createUser = async ({
 //     first_name,
@@ -89,6 +94,7 @@ module.exports = {
   initUserModel,
   createDefaultAdmin,
   createUser,
+  getUserByFk,
   getUserByEmail,
   getUserById,
   saveRefreshToken,
