@@ -10,6 +10,7 @@ const pool = mysql.createPool({
   database: process.env.MYSQL_DATABASE || 'dev_artisan_des_saveurs_db',
   waitForConnections: true,
   connectionLimit: 10,
+  charset: "utf8mb4",
 });
 
 console.log('✅ Pool MySQL initialisé');

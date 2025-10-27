@@ -54,3 +54,5 @@ const startServer = async () => {
 };
 
 startServer();
+
+module.exports = app; // Pour les test
