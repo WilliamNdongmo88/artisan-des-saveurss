@@ -46,7 +46,7 @@ const startServer = async () => {
       res.send('🚀 Node.js + MySQL connectés et initialisés !');
     });
 
-    server = app.listen(PORT, () => {
+    server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
     });
     return server; // Retourne l'instance du serveur
