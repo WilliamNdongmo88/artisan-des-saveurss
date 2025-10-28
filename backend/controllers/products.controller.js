@@ -24,7 +24,7 @@ const create_P = async (req, res) => {
             });
         }
         res.status(201).json({
-            product: {id: product.result, name, description, price, category, preparation, recette, file: product.file}
+            product: {id: product.productId, name, description, price, category, preparation, recette, file: product.file}
         })
     } catch (error) {
         console.error("### [Controller] CREATE PRODUCT ERROR : ", error.message);

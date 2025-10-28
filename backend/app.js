@@ -2,11 +2,11 @@ const express = require('express');
 const pool = require('./config/bd');
 const { initModels } = require('./models');
 const { createDefaultAdmin } = require('./models/users');
+const errorHandler = require('./middlewares/errorHandler');
 const { apiLimiter } = require('./middlewares/rateLimiter');
 const userRoutes = require('./routes/users.routes');
 const authRoutes = require('./routes/auth.routes');
 const productRoutes = require('./routes/products.routes');
-const errorHandler = require('./middlewares/errorHandler');
 const uploadRoutes = require("./routes/uploads.routes");
 // const cors = require("cors");
 
@@ -49,11 +49,11 @@ const startServer = async () => {
     server = app.listen(PORT, () => {
       console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
     });
-    return server; // Retourner l'instance du serveur
+    return server; // Retourne l'instance du serveur
   } catch (err) {
     console.error('❌ Erreur au démarrage :', err.message);
     // Le pool est géré par le module bd.js, pas besoin de le fermer ici
-    throw err; // Relancer l'erreur pour que l'appelant puisse la gérer
+    throw err; // Relance l'erreur pour que l'appelant puisse la gérer
   }
 };
 
@@ -72,7 +72,7 @@ const closeServer = async () => {
   }
 };
 
-// Ne pas appeler startServer() ici pour permettre à Jest de contrôler le démarrage.
+// L'appel de startServer() n'est pas faite ici pour permettre à Jest de contrôler le démarrage.
 
 module.exports = { app, startServer, closeServer, pool }; // Exporter l'application, les fonctions de contrôle et le pool pour les tests
 
