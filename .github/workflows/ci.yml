@@ -48,4 +48,10 @@ jobs:
           ADMIN_NAME: ${{ secrets.ADMIN_NAME }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          run: |
+            if [ -z "${{ secrets.MYSQL_ROOT_PASSWORD }}" ]; then
+              echo "❌ MYSQL_ROOT_PASSWORD is empty or unavailable!"
+            else
+              echo "✅ MYSQL_ROOT_PASSWORD is set (value hidden for security)."
+            fi
         run: npm test
