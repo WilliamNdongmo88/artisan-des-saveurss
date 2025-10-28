@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Étape 7 : lancer le serveur
-CMD ["node", "backend/app.js"]
+CMD ["node", "backend/server.js"]
