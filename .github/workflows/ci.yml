@@ -26,14 +26,14 @@ jobs:
         env:
           NODE_ENV: test
           MYSQLHOST: 127.0.0.1
-          MYSQLPORT: 3306 # Le port est mappé directement à 3306
-          MYSQLUSER: ${{ secrets.MYSQLUSER_TEST }}
-          MYSQLPASSWORD: ${{ secrets.MYSQLPASSWORD_TEST }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE_TEST }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET_TEST }}
-          ADMIN_NAME: ${{ secrets.ADMIN_NAME_TEST }}
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL_TEST }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD_TEST }}
+          MYSQLPORT: 3306
+          MYSQLUSER: root
+          MYSQLPASSWORD: dev-root
+          MYSQL_DATABASE: test_artisan_des_saveurs_db
+          JWT_SECRET: secret_for_ci
+          ADMIN_NAME: TestAdmin
+          ADMIN_EMAIL: testadmin@example.com
+          ADMIN_PASSWORD: TestPassword123
         run: npm test
     services:
       mysql:
