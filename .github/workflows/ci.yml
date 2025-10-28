@@ -48,6 +48,20 @@ jobs:
 
       - name: Run tests
         env:
+          run: |
+            echo "--- Vérification des Secrets ---"
+            # Vérifie si la variable est définie (non vide)
+            echo "MYSQL_USER est défini : ${MYSQL_USER:+OUI}"
+            echo "MYSQL_PASSWORD est défini : ${MYSQL_PASSWORD:+OUI}"
+            echo "JWT_SECRET_TEST est défini : ${JWT_SECRET:+OUI}"
+            
+            # Affiche les 3 premiers caractères (suffisant pour vérifier si la valeur est là)
+            echo "MYSQL_PASSWORD_TEST (début) : ${MYSQL_PASSWORD:0:3}***"
+            
+            # Vérifie la longueur de la variable (si elle est lue, elle aura une longueur > 0)
+            echo "Longueur de MYSQL_PASSWORD_TEST : ${MYSQL_PASSWORD}"
+            
+            echo "--------------------------------"
           NODE_ENV: test
           MYSQLHOST: 127.0.0.1
           MYSQLPORT: 3306
