@@ -26,7 +26,7 @@ jobs:
         env:
           NODE_ENV: test
           MYSQLHOST: 127.0.0.1
-          MYSQLPORT: 3306 # Le port est mappé directement à 3306
+          MYSQLPORT: 3306 # Le port 
           MYSQLUSER: ${{ secrets.MYSQLUSER_TEST }}
           MYSQLPASSWORD: ${{ secrets.MYSQLPASSWORD_TEST }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE_TEST }}
