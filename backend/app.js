@@ -34,10 +34,12 @@ let server; // Pour stocker l'instance du serveur HTTP
 const startServer = async () => {
   try {
     // 1️⃣ Vérifier la connexion à MySQL
+    console.log('🔹 Vérification de la connexion MySQL...');
     const [rows] = await pool.query('SELECT NOW() AS now');
     console.log('🕐 MySQL test query result:', rows[0]);
 
     // 2️⃣ Initialiser toutes les tables
+    console.log('🔹 Initialisation des tables...');
     await initModels();
     await createDefaultAdmin();
 
@@ -46,6 +48,7 @@ const startServer = async () => {
       res.send('🚀 Node.js + MySQL connectés et initialisés !');
     });
 
+    console.log('🔹 Démarrage du serveur...');
     server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
     });
