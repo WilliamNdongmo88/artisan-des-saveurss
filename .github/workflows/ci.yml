@@ -28,7 +28,7 @@ jobs:
           MYSQLHOST: 127.0.0.1
           MYSQLPORT: 3306
           MYSQLUSER: root
-          MYSQLPASSWORD: ${{ secrets.MYSQLPASSWORD_TEST }}"
+          MYSQLPASSWORD: dev-root
           MYSQL_DATABASE: test_artisan_des_saveurs_db
           JWT_SECRET: secret_for_ci
           ADMIN_NAME: TestAdmin
