@@ -72,9 +72,4 @@ jobs:
       - name: Deploy to Railway
         env:
           RAILWAY_TOKEN: e241e126-b3d3-4942-8349-d921205d037f
-        run: |
-          # Se connecter en mode CI
-          railway login --ci
-          
-          # Déployer le service
-          railway up --detach
+        run: railway up --detach
