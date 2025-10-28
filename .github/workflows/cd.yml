@@ -72,4 +72,5 @@ jobs:
       - name: Deploy to Railway
         env:
           RAILWAY_TOKEN: e241e126-b3d3-4942-8349-d921205d037f
-        run: railway up --detach
+        run: railway up --project awake-grace --service artisan-des-saveurss --detach
+
