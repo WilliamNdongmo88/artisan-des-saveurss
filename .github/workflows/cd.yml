@@ -1,23 +1,35 @@
-name: CD Production Railway
+name: Deploy Backend
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      # Ajout des commandes Railway
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
+      - name: Login Railway
+        run: railway login --token e241e126-b3d3-4942-8349-d921205d037f
+
+      - name: Link to Railway project
+        run: railway link --project eeb975e6-bcfd-414e-9890-e2d8850d58c2
+
       - name: Deploy to Railway
-        env:
-          RAILWAY_TOKEN: e241e126-b3d3-4942-8349-d921205d037f
-        run: |
-          railway link --project eeb975e6-bcfd-414e-9890-e2d8850d58c2
-          railway up --service backend --detach
+        run: railway up --service backend --detach
