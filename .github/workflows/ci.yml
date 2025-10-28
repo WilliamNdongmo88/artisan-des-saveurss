@@ -39,7 +39,7 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQLPASSWORD_TEST }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD_TEST }}
           MYSQL_USER: ${{ secrets.MYSQLUSER_TEST }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE_TEST }}
         ports:
