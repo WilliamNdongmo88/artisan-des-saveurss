@@ -17,7 +17,7 @@ jobs:
 
       - name: Deploy to Railway
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_TOKEN: e241e126-b3d3-4942-8349-d921205d037f
         run: |
-          railway link --project ${{ secrets.RAILWAY_PROJECT_ID }}
+          railway link --project eeb975e6-bcfd-414e-9890-e2d8850d58c2
           railway up --service backend --detach
