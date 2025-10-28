@@ -11,7 +11,7 @@ const uploadRoutes = require("./routes/uploads.routes");
 // const cors = require("cors");
 
 const app = express();
-const PORT = process.env.MYSQL_PORT || 3001;
+const PORT = process.env.PORT || 3001;
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./docs/swagger");
