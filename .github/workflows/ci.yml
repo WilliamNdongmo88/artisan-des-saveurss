@@ -23,12 +23,12 @@ jobs:
       - name: Run tests
         env:
           NODE_ENV: test
-          MYSQLHOST: 127.0.0.1
-          MYSQLPORT: 3306
-          MYSQLUSER: user-root
-          MYSQLPASSWORD: dev-root
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_PORT: 3306
+          MYSQL_USER: user-root
+          MYSQL_PASSWORD: dev-root
           MYSQL_DATABASE: test_artisan_des_saveurs_db
-          JWT_SECRET: secret_for_ci
+          JWT_SECRET: 4f38c9b7c2b841c093d62fd1aaf81a1e2dbf7e74b4c1b6b827e8ef93f16a55da
           ADMIN_NAME: TestAdmin
           ADMIN_EMAIL: testadmin@example.com
           ADMIN_PASSWORD: TestPassword123
