@@ -41,8 +41,8 @@ jobs:
           NODE_ENV: test
           MYSQLHOST: 127.0.0.1
           MYSQLPORT: 3306
-          MYSQLUSER: ${{ secrets.MYSQLUSER }}
-          MYSQLPASSWORD: ${{ secrets.MYSQLPASSWORD }}
+          MYSQLUSER: ${{ secrets.MYSQL_USER }}
+          MYSQLPASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           ADMIN_NAME: ${{ secrets.ADMIN_NAME }}

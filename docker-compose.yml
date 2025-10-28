@@ -25,15 +25,14 @@ services:
     container_name: res-artisan_des_saveurs_prod
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQLPASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3307:3306"
     networks:
       - artisan_des_saveurs_net
     volumes:
-      - prod_db_data:/var/lib/mysql
-
+      - prod_db_data:/var/lib/mysq
   adminer:
     image: adminer
     container_name: adminer_artisan
