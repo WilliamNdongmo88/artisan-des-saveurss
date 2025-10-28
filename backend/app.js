@@ -11,7 +11,7 @@ const uploadRoutes = require("./routes/uploads.routes");
 // const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3001;
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./docs/swagger");
@@ -46,7 +46,7 @@ const startServer = async () => {
       res.send('🚀 Node.js + MySQL connectés et initialisés !');
     });
 
-    server = app.listen(PORT, '0.0.0.0', () => {
+    server = app.listen(PORT, () => {
       console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
     });
     return server; // Retourne l'instance du serveur
