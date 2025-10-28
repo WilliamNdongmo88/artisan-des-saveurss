@@ -32,7 +32,7 @@ services:
     networks:
       - artisan_des_saveurs_net
     volumes:
-      - prod_db_data:/var/lib/mysq
+      - prod_db_data:/var/lib/mysql
   adminer:
     image: adminer
     container_name: adminer_artisan
