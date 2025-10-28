@@ -20,6 +20,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # --- Ajouter cette étape pour MySQL ---
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1
+        with:
+          mysql version: '8'
+          root password: dev-root
+          database: test_artisan_des_saveurs_db
+
       - name: Run tests
         run: npm test
 
