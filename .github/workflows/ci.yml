@@ -25,7 +25,7 @@ jobs:
           NODE_ENV: test
           MYSQL_HOST: 127.0.0.1
           MYSQL_PORT: 3306
-          MYSQL_USER: user-root
+          MYSQL_USER: root
           MYSQL_PASSWORD: dev-root
           MYSQL_DATABASE: test_artisan_des_saveurs_db
           JWT_SECRET: 4f38c9b7c2b841c093d62fd1aaf81a1e2dbf7e74b4c1b6b827e8ef93f16a55da
