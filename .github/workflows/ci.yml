@@ -22,16 +22,18 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Inject test environment variables
-        run: |
-          echo "NODE_ENV=test" >> .env.test
-          echo "MYSQLHOST=${{ secrets.MYSQLHOST_TEST }}" >> .env.test
-          echo "MYSQLUSER=${{ secrets.MYSQLUSER_TEST }}" >> .env.test
-          echo "MYSQLPASSWORD=${{ secrets.MYSQLPASSWORD_TEST }}" >> .env.test
-          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE_TEST }}" >> .env.test
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET_TEST }}" >> .env.test
-
       - name: Run tests
+        env:
+          NODE_ENV: test
+          MYSQLHOST: 127.0.0.1
+          MYSQLPORT: 3306 # Le port est mappé directement à 3306
+          MYSQLUSER: root
+          MYSQLPASSWORD: dev-root
+          MYSQL_DATABASE: test_artisan_des_saveurs_db
+          JWT_SECRET: secret_for_ci
+          ADMIN_NAME: TestAdmin
+          ADMIN_EMAIL: testadmin@example.com
+          ADMIN_PASSWORD: TestPassword123
         run: npm test
     services:
       mysql:
