@@ -42,12 +42,12 @@ jobs:
           MYSQL_HOST: 127.0.0.1
           MYSQL_PORT: 3306
           MYSQL_USER: root
-          MYSQL_PASSWORD: dev-root
-          MYSQL_DATABASE: test_artisan_des_saveurs_db
-          JWT_SECRET: 4f38c9b7c2b841c093d62fd1aaf81a1e2dbf7e74b4c1b6b827e8ef93f16a55da
-          ADMIN_NAME: TestAdmin
-          ADMIN_EMAIL: testadmin@example.com
-          ADMIN_PASSWORD: TestPassword123
+          MYSQL_PASSWORD: ${{ .env.MYSQL_PASSWORD }}
+          MYSQL_DATABASE: ${{ .env.MYSQL_DATABASE }}
+          JWT_SECRET: ${{ .env.JWT_SECRET }}
+          ADMIN_NAME: ${{ .env.ADMIN_NAME }}
+          ADMIN_EMAIL: ${{ .env.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ .env.ADMIN_PASSWORD }}
         run: npm test
 
   deploy:
@@ -71,6 +71,6 @@ jobs:
 
       - name: Deploy to Railway
         env:
-          RAILWAY_TOKEN: e241e126-b3d3-4942-8349-d921205d037f
+          RAILWAY_TOKEN: ${{ .env.RAILWAY_TOKEN }}
         run: railway up --service artisan-des-saveurss --detach
 
