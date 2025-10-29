@@ -52,7 +52,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build-test  # Ne se lance que si build-test est une réussite
+    needs: build-test  # Ne se lance que si build-test réussit
 
     steps:
       - name: Checkout repository
