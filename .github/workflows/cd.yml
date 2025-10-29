@@ -15,7 +15,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: dev-root
-          MYSQL_DATABASE: test_artisan_des_saveurs_db
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
         ports:
           - 3306:3306
         options: >-
