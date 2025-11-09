@@ -56,7 +56,7 @@ describe("Products API", () => {
             .set("Authorization", `Bearer ${token}`);
 
             
-            console.log("### res body:: ", res.body);
+            console.log("###PRODUCTS res body:: ", res.body);
             createdProductId = res.body.product.id;
             file = res.body.product.file;
             fileId = file.id;
